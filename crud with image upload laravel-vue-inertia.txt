@@ -1,6 +1,8 @@
 *To install axios-> npm i axios
 *To install Toast-> npm install --save vue-toastification
 *To install sweatalert2->npm install sweetalert2
+*To use font-aweasome-> npm install --save @fortawesome/fontawesome-svg-core @fortawesome/free-solid-svg-icons @fortawesome/vue-fontawesome
+
 
 
 *app.js
@@ -228,4 +230,17 @@ const DeleteCar=async(id)=>{
 }
 
 onMounted(fetchCars)
+
+*Buttons and Links
+
+<Link :href="`/admin/view_car/${car.id}`">
+   <font-awesome-icon :icon="['fas', 'eye']" size="1x" />
+</Link> ||
+<Link :href="`/admin/edit_car_page/${car.id}`">
+ <font-awesome-icon :icon="['fas', 'pen-to-square']" size="1x" />
+</Link> ||
+<button type="button" @click="DeleteCar(car.id)">
+  <font-awesome-icon :icon="['fas', 'trash']" size="1x" />
+</button>
+
 
