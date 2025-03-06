@@ -1,0 +1,76 @@
+*app.js:
+
+import Vue3EasyDataTable from 'vue3-easy-data-table';
+import 'vue3-easy-data-table/dist/style.css';
+
+createApp({ render: () => h(App, props) })
+      .use(plugin)
+      .component('EasyDataTable', Vue3EasyDataTable)
+      .mount(el)
+  }
+
+*Table.vue
+
+<script>
+let carData = reactive({
+   cars:[]
+})
+
+
+
+const headers=[
+      {text:"Name",value:"name"},
+      {text:"Brand",value:"brand"},
+      {text:"Model",value:"model"},
+      {text:"Car type",value:"car_type"},
+      {text:"Daily rent price",value:"daily_rent_price"},
+      {text:"Image",value:"image"},
+      {text:"Year",value:"year"},
+      {text:"Availability",value:"availability"},
+      {text:"Action",value:"action"}
+];
+
+const formattedCars=computed(()=>{
+    return carData.cars.map(car=>({
+        name:car.name,
+        brand:car.brand,
+        model:car.model,
+        car_type:car.car_type,
+        daily_rent_price:car.daily_rent_price,
+        image:car.image,
+        year:car.year,
+        availability:car.availability,
+        action:car.action
+    }))
+})
+</script>
+
+
+<template>
+
+<div class="card_body">
+    <EasyDataTable
+      :headers="headers"
+      :items="formattedCars"
+      :rows-per-page="3" 
+    >
+        <template #item-image="{image}">
+            <img :src="`/storage/${image}`" width="80px">
+        </template>
+
+      <template #item-action="{id}">
+            <Link :href="`/admin/view_car/${id}`">
+                  <font-awesome-icon :icon="['fas', 'eye']" size="1x" />
+            </Link> ||
+            <Link :href="`/admin/edit_car_page/${id}`">
+                  <font-awesome-icon :icon="['fas', 'pen-to-square']" size="1x" />
+            </Link> ||
+            <button type="button" @click="DeleteCar(id)">
+                  <font-awesome-icon :icon="['fas', 'trash']" size="1x" />
+            </button>
+      </template>
+    </EasyDataTable>
+                       
+                        
+ </div>
+</template>
