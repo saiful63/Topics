@@ -51,3 +51,7 @@ public function share(Request $request): array
             ],
         ]);
     }
+
+*You can use intemplete like this:
+
+{{$page.props.flash.message}}
