@@ -1,1 +1,53 @@
+*Signup.vue
+import{Link,usePage,router} from '@inertiajs/vue3'
 
+const submit = ()=>{
+    router.post('/create_user',formData,{
+       onSuccess:(response)=>{
+         toast.success(page.props.flash.message);
+       },
+       onError:(error)=>{
+         toast.error(page.props.flash.message);
+       }
+    })
+}
+
+*AuthController.php
+
+function CreateUser(Request $request){
+       $name = $request->input('name');
+       $email = $request->input('email');
+       $phone = $request->input('phone');
+       $password = $request->input('password');
+       $address = $request->input('address');
+
+       $user= User::create([
+           'name'=>$name,
+           'email'=>$email,
+           'phone'=>$phone,
+           'password'=>$password,
+           'address'=>$address
+       ]);
+      
+        if($user){
+           return redirect()->route('signup')->with('message', 'Registration successful!');
+
+        return redirect()->route('signup');
+       }
+       else{
+             return redirect()->route('signup')->with('message', 'Registration failed');
+       }
+   
+       
+    }
+
+*HandleInertiaRequest.php
+
+public function share(Request $request): array
+    {
+        return array_merge(parent::share($request), [
+            'flash' => [
+                'message' => fn () => $request->session()->get('message')
+            ],
+        ]);
+    }
